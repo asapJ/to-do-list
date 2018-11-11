@@ -1,8 +1,3 @@
-# tera
+This is a todo application built with #flutter. 
 
-A new Flutter project.
-
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+You can add todos and delete them once you're done with the particular task.
