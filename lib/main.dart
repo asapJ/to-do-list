@@ -14,24 +14,18 @@ List<Map<String, dynamic>> _todoList = [];
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
 
-  void fillTasks() {
-    for (var i = 0; i < 30; i++) {
-      Map<String, dynamic> values = {
-        "Task": "Task ${i + 1}",
-        "Location": "Lagos",
-        "Time": "10:00"
-      };
-      _todoList.add(values);
-    }
-  }
-
   void insertTask() {
     //Add the logic here
   }
 
+  void _updatePage(newTask) {
+    setState(() {
+      _todoList = newTask;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    fillTasks();
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tera',
@@ -39,11 +33,11 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        "createNewTask": (BuildContext context) => CreateTask(),
+        "createNewTask": (BuildContext context) => CreateTask(_todoList),
       },
       home: new Scaffold(
         body: HomePage(_todoList, insertTask),
-        floatingActionButton: AddTask(),
+        floatingActionButton: AddTask(_updatePage),
       ),
     );
   }
