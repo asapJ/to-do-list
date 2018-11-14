@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import '../models/todo.dart';
 
 class TodoContent extends StatelessWidget {
-  final List<Map<String, dynamic>> _todoList;
-  final List<Map<String, dynamic>> _completedTask = [];
-  final Function _insertTask;
-  TodoContent(this._todoList, this._insertTask);
+  final List<TodoList> _todoList;
+  final List<TodoList> _completedTask = [];
+  final Function _deleteTask;
+  final List<TodoList> _deletedItem = [];
+
+  TodoContent(this._todoList, this._deleteTask);
 
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -16,31 +19,18 @@ class TodoContent extends StatelessWidget {
           direction: DismissDirection.startToEnd,
           key: Key("$_todoList[index]['task']$_item"),
           child: ListTile(
-            title: new Text("${_todoList[index]["task"]}"),
-            subtitle: new Text("${_todoList[index]["location"]}"),
-            trailing: new Text("${_todoList[index]["time"]}"),
+            title: new Text("${_todoList[index].task}"),
+            subtitle: new Text("${_todoList[index].location}"),
+            trailing: new Text("${_todoList[index].time}"),
             leading: CircleAvatar(child: Icon(Icons.home)),
           ),
           onDismissed: (direction) {
-            deleteTask(index, context);
+            print(index);
+            _deleteTask(index, context, _deletedItem);
           },
         );
       },
     );
   }
 
-  void deleteTask(int index, BuildContext context) {
-    _todoList.removeAt(index);
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Task deleted"),
-        action: SnackBarAction(
-          label: "Undo",
-          onPressed: () {
-            _insertTask();
-          },
-        ),
-      ),
-    );
-  }
 }

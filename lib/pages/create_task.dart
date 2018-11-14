@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '../models/todo.dart';
 
 class CreateTask extends StatefulWidget {
-  final _todoList;
+  final List<DropdownMenuItem<String>> categories = [];
+  final List<TodoList> _todoList;
   CreateTask(this._todoList);
   _CreateTaskState createState() => _CreateTaskState();
 }
@@ -10,11 +12,33 @@ class _CreateTaskState extends State<CreateTask> {
   Map<String, dynamic> _formData = {
     "task": "",
     "location": "",
-    "time": "10:00"
+    "time": "10:00",
+    "category": "Business"
   };
+
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
   String task = "";
+
   String location = "";
+
+  String _value = "";
+
+  List<String> values = [];
+  @override
+  void initState() {
+    super.initState();
+    values.addAll(["One", "Twi", "Three"]);
+    _value = values.elementAt(0);
+  }
+
+  void newValue(String value) {
+    setState(() {
+      print(value);
+      _value = value;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -22,13 +46,33 @@ class _CreateTaskState extends State<CreateTask> {
       ),
       body: Form(
         key: _formKey,
-        child: new Column(
+        child: new ListView(
           children: <Widget>[
             _buildTaskField(),
             _buildLocationField(),
             _buildSaveButton(),
+            _buildDropDown(),
           ],
         ),
+      ),
+    );
+  }
+
+  //Building the various widgets on the page
+  Widget _buildDropDown() {
+    return Container(
+      padding: EdgeInsets.only(top: 50.0),
+      child: new DropdownButton(
+        items: values.map((String value) {
+          return DropdownMenuItem(
+            child: new Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          print("First value $value");
+          newValue(value);
+        },
+        hint: new Text("Select a category"),
       ),
     );
   }
@@ -73,7 +117,11 @@ class _CreateTaskState extends State<CreateTask> {
           return;
         }
         _formKey.currentState.save();
-        widget._todoList.add(_formData);
+        widget._todoList.add(TodoList(
+            task: _formData["task"],
+            location: _formData["location"],
+            time: _formData["time"],
+            category: _formData["category"]));
         Navigator.pop(context, widget._todoList);
       },
     );

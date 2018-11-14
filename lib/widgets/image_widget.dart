@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import './left_image.dart';
+import './right_image.dart';
+import '../models/todo.dart';
 
 class ImageWidget extends StatelessWidget {
-  TextStyle topStyle = new TextStyle(fontSize: 40.0, color: Colors.white);
+  final List<TodoList> _todoList;
+
+  ImageWidget(this._todoList);
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final firstWidth = 0.6 * screenWidth;
+    // final secondWidth = 0.3 * screenWidth;
     return Container(
       height: 200.0,
       decoration: BoxDecoration(
@@ -19,55 +27,11 @@ class ImageWidget extends StatelessWidget {
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-              Text(
-                "Your",
-                style: topStyle,
-              ),
-              Text(
-                "Things",
-                style: topStyle,
-              ),
-            ],
+          Container(
+            width: firstWidth,
+            child: LeftImage(),
           ),
-          SizedBox(
-            width: 100.0,
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.black.withOpacity(0.3),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Text("24"),
-                          Text("Personal"),
-                        ],
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Text("15"),
-                          Text("Business"),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Text("Hello world"),
-                ],
-              ),
-            ),
-          ),
+          RightImage(_todoList),
         ],
       ),
     );
