@@ -11,4 +11,10 @@ class TodoList {
       @required this.location,
       @required this.time,
       @required this.category});
+
+  @override
+  String toString() {
+    super.toString();
+    return 'Task: $task\nLocation: $location\nTime: $time\nCategory: $category\n';
+  }
 }

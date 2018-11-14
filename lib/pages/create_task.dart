@@ -12,7 +12,7 @@ class _CreateTaskState extends State<CreateTask> {
   Map<String, dynamic> _formData = {
     "task": "",
     "location": "",
-    "time": "10:00",
+    "time": '${TimeOfDay.now().hour}:${TimeOfDay.now().minute}',
     "category": "Business"
   };
 
@@ -28,7 +28,7 @@ class _CreateTaskState extends State<CreateTask> {
   @override
   void initState() {
     super.initState();
-    values.addAll(["One", "Twi", "Three"]);
+    values.addAll(["One", "Two", "Three"]);
     _value = values.elementAt(0);
   }
 
@@ -46,13 +46,16 @@ class _CreateTaskState extends State<CreateTask> {
       ),
       body: Form(
         key: _formKey,
-        child: new ListView(
-          children: <Widget>[
-            _buildTaskField(),
-            _buildLocationField(),
-            _buildSaveButton(),
-            _buildDropDown(),
-          ],
+        child: Padding(
+          padding: EdgeInsets.all(5.0),
+                  child: new ListView(
+            children: <Widget>[
+              _buildTaskField(),
+              _buildLocationField(),
+              _buildSaveButton(),
+              _buildDropDown(),
+            ],
+          ),
         ),
       ),
     );
@@ -63,6 +66,7 @@ class _CreateTaskState extends State<CreateTask> {
     return Container(
       padding: EdgeInsets.only(top: 50.0),
       child: new DropdownButton(
+        isExpanded: true,
         items: values.map((String value) {
           return DropdownMenuItem(
             child: new Text(value),

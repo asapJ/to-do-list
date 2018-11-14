@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
 
   void insertTask(TodoList item) {
     //Add the logic here
-    print(item);
+    print(item.toString());
   }
 
     void deleteTask(int index, BuildContext context, TodoList _deletedItem) {
