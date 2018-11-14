@@ -24,7 +24,7 @@ class _TodoContentState extends State<TodoContent> {
       itemCount: _todoList.length,
       itemBuilder: (BuildContext context, int index) {
         String _item = index.toString();
-        return Dismissible(
+        return Dismissible( 
           background: Container(color: Colors.blue),
           direction: DismissDirection.startToEnd,
           key: Key("$_todoList[index]['task']$_item"),
